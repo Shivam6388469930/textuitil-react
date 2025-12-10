@@ -2,7 +2,7 @@ name: Hello world
 
 on: 
   push:
-    branches: ["gh-pages"]
+    branches: ["gh-pages"]     # CI runs on gh-pages branch
   pull_request:
     branches: ["gh-pages"]
 
@@ -11,5 +11,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: print hello world
-        run: echo "hello world"
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build React app
+        run: npm run build
